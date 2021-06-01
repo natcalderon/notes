@@ -1,8 +1,14 @@
 const fs = require("fs");
-const data = require("../db/db.json");
+
 
 module.exports = function(app){
-    function writeToDB(notes){
+    const data = require("../db/db.json")
+
+    app.get("/api/notes", (req, res) =>{
+        return res.json(data);
+    })
+
+    function dbArray(notes){
         notes = JSON.stringify(notes);
         console.log (notes);
         
@@ -13,12 +19,8 @@ module.exports = function(app){
         });
     }
 
-     app.get("/api/notes", function(req, res){
-        res.json(data);
-    });
-
     
-    app.post("/api/notes", function(req, res){
+    app.post("/api/notes", (req, res) =>{
 
         if (data.length == 0){
             req.body.id = "0";
@@ -30,29 +32,24 @@ module.exports = function(app){
         data.push(req.body);
 
      
-        writeToDB(data);
-        console.log(data);
-
-      
+        dbArray(data);
         res.json(req.body);
     });
 
     // DELETE Method to delete note//
-    app.delete("/api/notes/:id", function(req, res){
+    app.delete("/api/notes/:id", (req, res) =>{
         
       
         let id = req.params.id.toString();
-        console.log(id);
 
-        
         for (i=0; i < data.length; i++){
            if (data[i].id == id){
                 console.log("delete");
-                res.send(notesData[i]);
+                res.send(data[i]);
                 notesData.splice(i,1);
                 break;
             }
         }
-         writeToDB(notesData);
+        dbArray(data);
  });
 };
