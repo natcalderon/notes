@@ -1,7 +1,8 @@
 const express = require('express');
+const path = require('path');
 // instantiate the server
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,7 +16,7 @@ require('./routes/apiRoutes')(app);
 require('./routes/htmlRoutes')(app);
 
 // method to make erver listen
-app.listen(PORT, () => {
-    console.log(`App listening on PORT ${PORT}`);
+app.listen(PORT, function() {
+    console.log(`Server is listening on PORT: ${PORT}`);
   });
   
