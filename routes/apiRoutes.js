@@ -35,21 +35,4 @@ module.exports = function(app){
         dbArray(data);
         res.json(req.body);
     });
-
-    // DELETE Method to delete note//
-    app.delete("/api/notes/:id", (req, res) =>{
-        
-      
-        let id = req.params.id.toString();
-
-        for (i=0; i < data.length; i++){
-           if (data[i].id == id){
-                console.log("delete");
-                res.send(data[i]);
-                notesData.splice(i,1);
-                break;
-            }
-        }
-        dbArray(data);
- });
 };
